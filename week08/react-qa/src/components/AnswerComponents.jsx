@@ -59,8 +59,9 @@ function AnswerData(props) {
 function AnswerAction(props) {
   return(
     <td>
-      <Button variant='warning' onClick={
-        () => props.voteUp(props.answerId)
+      <Button variant='warning' onClick={ // non riciede la funzione da chiamare ma una callback(arrow function-> voteUp)
+        () => props.voteUp(props.answerId) // passo come parametro l'id della risposta e per farlo serve una props
+                                          // voteUp va definita in App poiché è lì che c'è lo stato quindi anche essa va passata come props
       }><i className='bi bi-arrow-up'></i></Button>
       <Button variant='primary' className='mx-1'><i className='bi bi-pencil-square'></i></Button> 
       <Button variant='danger'><i className='bi bi-trash'></i></Button>
