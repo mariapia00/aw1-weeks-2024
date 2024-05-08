@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Row, Col, Table, Button } from "react-bootstrap";
-import FormAnswer from './FormAnswer';
+import AnswerForm from './AnswerForm';
 
 function Answers (props) {
 
@@ -13,7 +13,7 @@ function Answers (props) {
     <Row>
       <Col lg={10} className="mx-auto">
         <AnswerTable answers={props.answers} voteUp={props.voteUp}></AnswerTable>
-        <FormAnswer />
+        <AnswerForm />
       </Col>
     </Row>
     </>
