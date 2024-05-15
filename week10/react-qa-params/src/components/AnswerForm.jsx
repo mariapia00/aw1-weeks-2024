@@ -11,8 +11,7 @@ function AnswerForm(props) {
   
   const [text, setText] = useState(props.answer ? props.answer.text : '');
   const [email, setEmail] = useState(props.answer ? props.answer.email : '');
-  /* editableAnswer.date ora è già una stringa e formattata come ci serve, non occorre metodo .format() */
-  const [date, setDate] = useState(props.answer ? props.answer.date : dayjs().format('YYYY-MM-DD'));
+  const [date, setDate] = useState(props.answer ? props.answer.date.format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'));
 
   const handleSubmit = (event) => {
     event.preventDefault();
