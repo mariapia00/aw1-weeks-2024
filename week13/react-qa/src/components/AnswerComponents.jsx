@@ -13,8 +13,9 @@ function Answers(props) {
     </Row>
     <Row>
       <Col lg={10} className="mx-auto">
-        <AnswerTable answers={props.answers} voteUp={props.voteUp}/>
-        <Link className="btn btn-primary mb-4" to="addAnswer">Add</Link>
+        {/* UPDATED */}
+        <AnswerTable answers={props.answers} voteUp={props.voteUp} loggedIn={props.loggedIn} user={props.user}/>
+        {props.loggedIn && <Link className="btn btn-primary mb-4" to="addAnswer">Add</Link>}   
       </Col>
     </Row>
     </>
@@ -42,11 +43,12 @@ function AnswerTable (props) {
           <th>text</th>
           <th>Author</th>
           <th>Score <Button variant='link' onClick={sortByScore} style={{color: 'black'}}><i className={sortOrder ==='asc' ? 'bi bi-sort-numeric-up' : 'bi bi-sort-numeric-down'}></i></Button></th>
-          <th>Actions</th>
+          {props.loggedIn && <th>Actions</th>}
         </tr>
       </thead>
       <tbody>
-        { sortedAnswers.map((ans) => <AnswerRow answer={ans} key={ans.id} voteUp={props.voteUp} />) }
+        {/* UPDATED */}
+        { sortedAnswers.map((ans) => <AnswerRow answer={ans} key={ans.id} voteUp={props.voteUp} loggedIn={props.loggedIn} user={props.user}/>) }
       </tbody>
     </Table>
   );
@@ -56,7 +58,8 @@ function AnswerRow(props) {
   return(
     <tr>
       <AnswerData answer={props.answer}/>
-      <AnswerAction answer={props.answer} voteUp={props.voteUp} />
+      {/* UPDATED */}
+      {props.loggedIn && <AnswerAction answer={props.answer} voteUp={props.voteUp} user={props.user}/>}
     </tr>
   );
 }
@@ -72,18 +75,20 @@ function AnswerData(props) {
   );
 }
 
+/* UPDATED */
 function AnswerAction(props) {
   return(
     <td>
       <Button variant='warning' onClick={
         () => props.voteUp(props.answer.id)
-      }><i className='bi bi-arrow-up'></i></Button>
-      <Link className='btn btn-primary' to={`editAnswer/${props.answer.id}`}
-        /* serialize() method was added to QAModels.js. location.state can not manage properly "complex" objects (i.e., objects inside objects). */
-        state={props.answer.serialize()}>
-          <i className='bi bi-pencil-square' />
+      } disabled={props.answer.voted || props.user.username === props.answer.email}><i className='bi bi-arrow-up'></i></Button>
+
+      {props.user.username === props.answer.email && <>
+      <Link className='btn btn-primary mx-1 ' to={`editAnswer/${props.answer.id}`} state={props.answer.serialize()} disabled={!props.loggedIn}>
+        <i className='bi bi-pencil-square' />
       </Link> 
       <Button variant='danger'><i className='bi bi-trash'></i></Button>
+      </>}
     </td>
   );
 }

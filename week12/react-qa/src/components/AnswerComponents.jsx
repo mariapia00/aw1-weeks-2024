@@ -77,11 +77,9 @@ function AnswerAction(props) {
     <td>
       <Button variant='warning' onClick={
         () => props.voteUp(props.answer.id)
-      }><i className='bi bi-arrow-up'></i></Button>
-      <Link className='btn btn-primary' to={`editAnswer/${props.answer.id}`}
-        /* serialize() method was added to QAModels.js. location.state can not manage properly "complex" objects (i.e., objects inside objects). */
-        state={props.answer.serialize()}>
-          <i className='bi bi-pencil-square' />
+      } disabled={props.answer.voted}><i className='bi bi-arrow-up'></i></Button>
+      <Link className='btn btn-primary mx-1' to={`editAnswer/${props.answer.id}`} state={props.answer.serialize()}>
+        <i className='bi bi-pencil-square' />
       </Link> 
       <Button variant='danger'><i className='bi bi-trash'></i></Button>
     </td>
